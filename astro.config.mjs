@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://fayettevilleseptic.com',
+  site: 'https://fayettevilleseptictank.com',
   build: {
     format: 'directory',
   },

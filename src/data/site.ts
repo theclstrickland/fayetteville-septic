@@ -11,9 +11,9 @@
 
 export const site = {
   // ── Brand ──────────────────────────────────────────────
-  name: 'Fayetteville Septic',
-  domain: 'fayettevilleseptic.com',
-  url: 'https://fayettevilleseptic.com',
+  name: 'Fayetteville Septic Tank',
+  domain: 'fayettevilleseptictank.com',
+  url: 'https://fayettevilleseptictank.com',
   phone: '(910) 994-6791',
   phoneTel: '+19109946791',
   tagline: 'Septic Tank Pumping & Repair',
