@@ -6,23 +6,22 @@ import { site } from '../data/site';
 <Base>
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <div class="container">
+    <div class="hero-overlay"></div>
+    <div class="container hero-inner">
       <div class="hero-content">
         <div class="hero-badge fade-up">Serving {site.county} County & Beyond</div>
         <h1 class="fade-up fade-up-d1">
-          {site.city} <span>{site.tagline.split(' & ')[0]}</span><br />& Repair
+          {site.city} Septic Tank<br />Pumping & Repair
         </h1>
         <p class="hero-sub fade-up fade-up-d2">
-          We provide septic tank pumping, cleaning, repair, and inspection across {site.city}, {
-            site.state
-          } and surrounding counties. Call now for fast local service and a free estimate.
+          We provide septic tank pumping, cleaning, repair, and inspection in {site.city}, {site.state} and the surrounding counties. Call now for fast local service and a free estimate.
         </p>
         <div class="hero-actions fade-up fade-up-d3">
           <a href={`tel:${site.phoneTel}`} class="btn-primary pulse">📞 {site.phone}</a>
-          <a href="#contact" class="btn-secondary">Request a Free Estimate</a>
+          <a href="#contact" class="btn-secondary-light">Request a Free Estimate</a>
         </div>
       </div>
-      <div class="hero-visual fade-up fade-up-d4">
+      <div class="hero-card-wrap fade-up fade-up-d4">
         <div class="hero-card">
           <div class="hero-card-header">
             <div class="hero-card-icon">🚛</div>
@@ -116,7 +115,16 @@ import { site } from '../data/site';
         </p>
         <a href={`tel:${site.phoneTel}`} class="btn-primary">Call for Same-Day Service</a>
       </div>
-      <div class="detail-visual">
+      <div class="detail-right">
+        <img
+          src="https://images.pexels.com/photos/6419128/pexels-photo-6419128.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt={`Septic tank pumping service truck in ${site.city}, NC`}
+          loading="lazy"
+          width="600"
+          height="400"
+          class="detail-photo"
+        />
+        <div class="detail-visual">
         <h4 class="price-table-heading">{site.city} Area Pricing</h4>
         {
           site.pricing.map((p) => (
@@ -130,6 +138,7 @@ import { site } from '../data/site';
           Prices confirmed on the phone before dispatch. No surprise charges. If we find something
           unexpected on-site, we stop and call you first.
         </p>
+      </div>
       </div>
     </div>
   </section>
@@ -238,21 +247,19 @@ import { site } from '../data/site';
 <style>
   /* ── Hero ── */
   .hero {
-    padding: 80px 0 100px;
     position: relative;
+    background: url('https://images.pexels.com/photos/8961065/pexels-photo-8961065.jpeg?auto=compress&cs=tinysrgb&w=1400') center/cover no-repeat;
+    padding: 80px 0 100px;
     overflow: hidden;
   }
-  .hero::before {
-    content: '';
+  .hero-overlay {
     position: absolute;
-    top: -100px;
-    right: -200px;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(196, 90, 45, 0.04) 0%, transparent 70%);
-    pointer-events: none;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(28, 40, 38, 0.92) 0%, rgba(28, 40, 38, 0.7) 100%);
   }
-  .hero .container {
+  .hero-inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
@@ -262,8 +269,8 @@ import { site } from '../data/site';
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--green-light);
-    color: var(--green);
+    background: rgba(58, 125, 92, 0.2);
+    color: #7ccea0;
     padding: 6px 14px;
     border-radius: 100px;
     font-size: 13px;
@@ -275,7 +282,7 @@ import { site } from '../data/site';
     content: '';
     width: 7px;
     height: 7px;
-    background: var(--green);
+    background: #7ccea0;
     border-radius: 50%;
   }
   .hero h1 {
@@ -283,13 +290,14 @@ import { site } from '../data/site';
     font-weight: 800;
     margin-bottom: 20px;
     letter-spacing: -0.02em;
+    color: #fff;
   }
   .hero h1 span {
     color: var(--accent);
   }
   .hero-sub {
     font-size: 18px;
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 32px;
     max-width: 480px;
     line-height: 1.7;
@@ -298,6 +306,25 @@ import { site } from '../data/site';
     display: flex;
     gap: 14px;
     flex-wrap: wrap;
+  }
+  .btn-secondary-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #fff;
+    padding: 16px 28px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .btn-secondary-light:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.08);
   }
 
   /* ── Hero Card ── */
@@ -474,7 +501,19 @@ import { site } from '../data/site';
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
-    align-items: center;
+    align-items: start;
+  }
+  .detail-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .detail-photo {
+    border-radius: var(--radius-lg);
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    box-shadow: var(--shadow-lg);
   }
   .detail-content h2 {
     font-size: clamp(26px, 2.8vw, 36px);
@@ -687,11 +726,11 @@ import { site } from '../data/site';
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
-    .hero .container {
+    .hero-inner {
       grid-template-columns: 1fr;
       gap: 40px;
     }
-    .hero-visual {
+    .hero-card-wrap {
       order: -1;
     }
     .detail .container {

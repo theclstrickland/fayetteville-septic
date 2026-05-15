@@ -1,0 +1,125 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+---
+
+<Base
+  title={`About ${site.name} | Local ${site.stateFull} Septic Service`}
+  description={`Local septic tank services in ${site.city}, ${site.state}. Licensed, insured, fast, and reliable.`}
+>
+  <section class="about-hero">
+    <div class="about-hero-overlay"></div>
+    <div class="container about-hero-inner">
+      <h1>About {site.name}</h1>
+      <p>Reliable septic service for homeowners and businesses across the {site.city} metro.</p>
+      <a href={`tel:${site.phoneTel}`} class="btn-primary">📞 {site.phone}</a>
+    </div>
+  </section>
+
+  <section class="about-body">
+    <div class="container about-content">
+      <h2>Local Septic Service You Can Count On</h2>
+      <p>
+        {site.name} is a local {site.stateFull} septic company serving homeowners and businesses across the {site.city} metro. We show up, solve the problem, and make septic service simple. No 800-number call centers, no surprise charges, no automatic upsells to full replacement when a basic repair will do.
+      </p>
+      <p>
+        When you call our (910) number, you reach a local dispatcher — not a national booking service. Our crew is licensed, insured, and certified. We carry the proper septage hauler licensing required for legal pumping and disposal in {site.stateFull}, and we run our service the way we'd want service run on our own homes: honest inspection first, then a quote, then the work.
+      </p>
+
+      <h2>What We Do</h2>
+      <ul class="about-services">
+        {site.services.map((s) => (
+          <li>
+            <a href={`/${s.slug}/`}>{s.icon} {s.title}</a>
+          </li>
+        ))}
+      </ul>
+
+      <h2>Where We Serve</h2>
+      <p>
+        {site.locations.map((l) => l.name).join(', ')}, plus the surrounding {site.counties} county addresses.
+      </p>
+    </div>
+  </section>
+
+  <section class="about-cta">
+    <div class="container" style="text-align:center;">
+      <h2>Ready to Schedule?</h2>
+      <a href={`tel:${site.phoneTel}`} class="btn-primary" style="font-size:18px;padding:18px 36px;">Call {site.phone}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about-hero {
+    position: relative;
+    background: url('https://images.pexels.com/photos/8961065/pexels-photo-8961065.jpeg?auto=compress&cs=tinysrgb&w=1400') center/cover no-repeat;
+    padding: 72px 0;
+    text-align: center;
+  }
+  .about-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 40, 38, 0.9);
+  }
+  .about-hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .about-hero h1 {
+    color: #fff;
+    font-size: clamp(28px, 3.5vw, 44px);
+    margin-bottom: 12px;
+  }
+  .about-hero p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 17px;
+    margin-bottom: 24px;
+  }
+
+  .about-body {
+    padding: 64px 0;
+  }
+  .about-content {
+    max-width: 780px;
+  }
+  .about-content h2 {
+    font-size: clamp(22px, 2.5vw, 30px);
+    margin: 40px 0 16px;
+  }
+  .about-content h2:first-child {
+    margin-top: 0;
+  }
+  .about-content p {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .about-services {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .about-services li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--accent);
+    transition: color 0.2s;
+  }
+  .about-services li a:hover {
+    color: var(--accent-hover);
+  }
+
+  .about-cta {
+    padding: 64px 0;
+    background: var(--bg-alt);
+  }
+  .about-cta h2 {
+    margin-bottom: 20px;
+  }
+</style>

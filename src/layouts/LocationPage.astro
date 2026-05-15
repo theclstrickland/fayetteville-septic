@@ -1,0 +1,407 @@
+---
+import Base from './Base.astro';
+import { site } from '../data/site';
+
+interface FAQ {
+  q: string;
+  a: string;
+}
+interface Props {
+  title: string;
+  meta: string;
+  h1: string;
+  intro: string;
+  cityName: string;
+  county: string;
+  bodyHeading: string;
+  body: string;
+  servicesIntro: string;
+  whyLocal: string;
+  faqs: FAQ[];
+}
+
+const { title, meta, h1, intro, cityName, county, bodyHeading, body, servicesIntro, whyLocal, faqs } = Astro.props;
+---
+
+<Base title={title} description={meta}>
+  <!-- Hero -->
+  <section class="loc-hero">
+    <div class="container">
+      <div class="loc-hero-badge">📍 {county}</div>
+      <h1>{h1}</h1>
+      <p class="loc-hero-intro">{intro}</p>
+      <div class="loc-hero-actions">
+        <a href={`tel:${site.phoneTel}`} class="btn-primary pulse">📞 {site.phone}</a>
+        <a href="/contact/" class="btn-secondary">Request a Free Estimate</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Bar -->
+  <div class="loc-trust">
+    <div class="container">
+      <div class="loc-trust-items">
+        {site.trustBadges.map((b) => (
+          <span class="loc-trust-item">{b.icon} {b.text}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Body -->
+  <section class="loc-body">
+    <div class="container">
+      <h2>{bodyHeading}</h2>
+      {body.split('\n\n').map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+
+  <!-- Services Available -->
+  <section class="loc-services">
+    <div class="container">
+      <h2>Septic Services in {cityName}</h2>
+      <p class="loc-services-intro">{servicesIntro}</p>
+      <div class="loc-services-grid">
+        {site.services.map((svc) => (
+          <a href={`/${svc.slug}/`} class="loc-service-card">
+            <span class="loc-service-icon">{svc.icon}</span>
+            <span class="loc-service-name">{svc.title}</span>
+            <span class="loc-service-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Local -->
+  <section class="loc-why">
+    <div class="container">
+      <h2>Why Choose a Local {cityName} Septic Team</h2>
+      <p>{whyLocal}</p>
+      <a href={`tel:${site.phoneTel}`} class="btn-primary">Call {site.phone}</a>
+    </div>
+  </section>
+
+  <!-- Nearby Areas -->
+  <section class="loc-nearby">
+    <div class="container">
+      <h2>Also Serving Nearby Areas</h2>
+      <div class="loc-nearby-grid">
+        {site.locations.filter((l) => l.name !== `${cityName}, ${site.state}` && l.name !== cityName && l.name !== `${cityName} Area`).map((l) => (
+          <a href={`/${l.slug}/`} class="loc-nearby-card">
+            <span class="loc-dot" /> {l.name}
+          </a>
+        ))}
+      </div>
+      <p class="loc-counties"><strong>Counties served:</strong> {site.counties}.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  {faqs.length > 0 && (
+    <section class="loc-faq">
+      <div class="container">
+        <h2>Septic Questions in {cityName}</h2>
+        <div class="loc-faq-list">
+          {faqs.map((f) => (
+            <details class="faq-item">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- FAQ Schema -->
+  {faqs.length > 0 && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      })}
+    />
+  )}
+
+  <!-- Bottom CTA -->
+  <section class="loc-cta">
+    <div class="container">
+      <h2>Reliable Septic Service in {cityName}</h2>
+      <p>Real local team. Honest pricing. Fast response. Free estimates.</p>
+      <a href={`tel:${site.phoneTel}`} class="btn-primary" style="font-size:18px;padding:18px 36px;">📞 Call {site.phone}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Location Hero ── */
+  .loc-hero {
+    padding: 72px 0 64px;
+    background: var(--bg);
+  }
+  .loc-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-light);
+    color: var(--green);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .loc-hero h1 {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+  .loc-hero-intro {
+    font-size: 18px;
+    color: var(--text-light);
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 28px;
+  }
+  .loc-hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Trust ── */
+  .loc-trust {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+  }
+  .loc-trust-items {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .loc-trust-item {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-light);
+  }
+
+  /* ── Body ── */
+  .loc-body {
+    padding: 64px 0;
+  }
+  .loc-body .container {
+    max-width: 780px;
+  }
+  .loc-body h2 {
+    font-size: clamp(24px, 2.5vw, 34px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .loc-body p {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  /* ── Services Grid ── */
+  .loc-services {
+    padding: 64px 0;
+    background: var(--bg-alt);
+  }
+  .loc-services h2 {
+    font-size: clamp(24px, 2.5vw, 34px);
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .loc-services-intro {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 600px;
+  }
+  .loc-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .loc-service-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .loc-service-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow);
+  }
+  .loc-service-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .loc-service-name {
+    font-weight: 600;
+    font-size: 15px;
+    flex: 1;
+  }
+  .loc-service-arrow {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  /* ── Why Local ── */
+  .loc-why {
+    padding: 64px 0;
+  }
+  .loc-why .container {
+    max-width: 780px;
+  }
+  .loc-why h2 {
+    font-size: clamp(24px, 2.5vw, 34px);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+  .loc-why p {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  /* ── Nearby ── */
+  .loc-nearby {
+    padding: 56px 0;
+    background: var(--bg-alt);
+  }
+  .loc-nearby h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .loc-nearby-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .loc-nearby-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: border-color 0.2s;
+  }
+  .loc-nearby-card:hover {
+    border-color: var(--accent);
+  }
+  .loc-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .loc-counties {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 16px;
+  }
+
+  /* ── FAQ ── */
+  .loc-faq {
+    padding: 56px 0;
+  }
+  .loc-faq h2 {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+  .loc-faq-list {
+    max-width: 780px;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item summary {
+    padding: 18px 0;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--heading);
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary::after {
+    content: '+';
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+  .faq-item p {
+    padding: 0 0 18px;
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* ── Bottom CTA ── */
+  .loc-cta {
+    padding: 72px 0;
+    background: var(--bg-alt);
+    text-align: center;
+  }
+  .loc-cta h2 {
+    font-size: clamp(28px, 3vw, 40px);
+    margin-bottom: 12px;
+  }
+  .loc-cta p {
+    color: var(--text-light);
+    font-size: 17px;
+    margin-bottom: 28px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    .loc-hero {
+      padding: 48px 0;
+    }
+    .loc-trust-items {
+      gap: 16px;
+    }
+    .loc-services-grid {
+      grid-template-columns: 1fr;
+    }
+    .loc-nearby-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

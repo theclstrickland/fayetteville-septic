@@ -1,0 +1,368 @@
+---
+import Base from './Base.astro';
+import { site } from '../data/site';
+
+interface FAQ {
+  q: string;
+  a: string;
+}
+interface Section {
+  heading: string;
+  body: string;
+  image?: string;
+  imageAlt?: string;
+}
+interface Props {
+  title: string;
+  meta: string;
+  h1: string;
+  subtitle: string;
+  heroImage: string;
+  sections: Section[];
+  faqs: FAQ[];
+}
+
+const { title, meta, h1, subtitle, heroImage, sections, faqs } = Astro.props;
+---
+
+<Base title={title} description={meta}>
+  <!-- Hero Banner with Background Image -->
+  <section class="service-hero" style={`--hero-bg: url(${heroImage})`}>
+    <div class="service-hero-overlay"></div>
+    <div class="container service-hero-inner">
+      <h1>{h1}</h1>
+      <p class="service-hero-sub">{subtitle}</p>
+      <div class="service-hero-actions">
+        <a href={`tel:${site.phoneTel}`} class="btn-primary pulse">📞 {site.phone}</a>
+        <a href="/contact/" class="btn-secondary-light">Request a Free Estimate</a>
+      </div>
+      <div class="service-hero-badges">
+        {site.trustBadges.map((b) => (
+          <span class="hero-badge-item">{b.icon} {b.text}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Sections -->
+  {sections.map((sec, i) => (
+    <section class={`content-section ${i % 2 === 1 ? 'alt' : ''}`}>
+      <div class={`container content-grid ${sec.image ? 'has-image' : ''} ${i % 2 === 1 && sec.image ? 'reverse' : ''}`}>
+        <div class="content-text">
+          <h2>{sec.heading}</h2>
+          {sec.body.split('\n\n').map((p) => (
+            <p>{p}</p>
+          ))}
+        </div>
+        {sec.image && (
+          <div class="content-image">
+            <img src={sec.image} alt={sec.imageAlt || ''} loading="lazy" width="600" height="400" />
+          </div>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <!-- CTA Band -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Schedule Service in {site.city}</h2>
+      <p>Call our local team for fast service across the metro.</p>
+      <a href={`tel:${site.phoneTel}`} class="btn-primary">Call {site.phone}</a>
+    </div>
+  </section>
+
+  <!-- Locations -->
+  <section class="service-locations">
+    <div class="container">
+      <h2>Available In</h2>
+      <div class="loc-grid">
+        {site.locations.map((l) => (
+          <a href={`/${l.slug}/`} class="loc-card">
+            <span class="loc-dot" /> {l.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  {faqs.length > 0 && (
+    <section class="service-faq">
+      <div class="container">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          {faqs.map((f) => (
+            <details class="faq-item">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- FAQ Schema -->
+  {faqs.length > 0 && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      })}
+    />
+  )}
+</Base>
+
+<style>
+  /* ── Service Hero ── */
+  .service-hero {
+    position: relative;
+    background: var(--hero-bg) center/cover no-repeat;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+  }
+  .service-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(28, 40, 38, 0.92) 0%, rgba(28, 40, 38, 0.75) 100%);
+  }
+  .service-hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .service-hero h1 {
+    color: #fff;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    max-width: 700px;
+  }
+  .service-hero-sub {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 28px;
+  }
+  .service-hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .btn-secondary-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #fff;
+    padding: 16px 28px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .btn-secondary-light:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .service-hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .hero-badge-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* ── Content Sections ── */
+  .content-section {
+    padding: 72px 0;
+  }
+  .content-section.alt {
+    background: var(--bg-alt);
+  }
+  .content-grid {
+    max-width: 780px;
+  }
+  .content-grid.has-image {
+    max-width: var(--max-width);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .content-grid.has-image.reverse {
+    direction: rtl;
+  }
+  .content-grid.has-image.reverse > * {
+    direction: ltr;
+  }
+  .content-text h2 {
+    font-size: clamp(24px, 2.5vw, 34px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .content-text p {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .content-text p:last-child {
+    margin-bottom: 0;
+  }
+  .content-image img {
+    border-radius: var(--radius-lg);
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* ── CTA Band ── */
+  .cta-band {
+    background: var(--bg-dark);
+    color: #fff;
+    padding: 56px 0;
+    text-align: center;
+  }
+  .cta-band h2 {
+    color: #fff;
+    font-size: clamp(24px, 2.5vw, 34px);
+    margin-bottom: 10px;
+  }
+  .cta-band p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* ── Locations ── */
+  .service-locations {
+    padding: 56px 0;
+  }
+  .service-locations h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .loc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .loc-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: border-color 0.2s;
+  }
+  .loc-card:hover {
+    border-color: var(--accent);
+  }
+  .loc-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── FAQ ── */
+  .service-faq {
+    padding: 56px 0;
+    background: var(--bg-alt);
+  }
+  .service-faq h2 {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+  .faq-list {
+    max-width: 780px;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item summary {
+    padding: 18px 0;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--heading);
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary::after {
+    content: '+';
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+  .faq-item p {
+    padding: 0 0 18px;
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .content-grid.has-image {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .content-grid.has-image.reverse {
+      direction: ltr;
+    }
+    .service-hero {
+      min-height: 400px;
+      padding: 56px 0;
+    }
+  }
+  @media (max-width: 680px) {
+    .service-hero-badges {
+      gap: 8px;
+    }
+    .hero-badge-item {
+      font-size: 11px;
+      padding: 4px 10px;
+    }
+    .loc-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
