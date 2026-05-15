@@ -18,8 +18,7 @@ export const servicePages = {
       {
         heading: `Professional Septic Tank Pumping for ${c} Homes`,
         body: `Septic tank pumping is the single most important piece of routine maintenance for any home on a septic system. In the ${c} metro, we recommend pumping every 3 to 5 years for most families. Skip too many pumps and solids start migrating into your drain field, which is where the cheap maintenance turns into a $10,000-plus repair.\n\nOur local septic pumping crew services homes across ${co}, Hoke, Harnett, and Moore counties with same-day availability for most addresses. We arrive with a fully-equipped vacuum truck, locate the access lid (digging it up if needed), pump the full contents including the sludge layer at the bottom, inspect the baffles and tank walls while we're there, and provide a written record for your files.`,
-        image: 'https://images.pexels.com/photos/6419205/pexels-photo-6419205.jpeg?auto=compress&cs=tinysrgb&w=800',
-        imageAlt: `Septic technician connecting vacuum hose to residential tank in ${c}`,
+        // image removed — add your own later
       },
       {
         heading: `What Septic Tank Pumping Costs in ${c}`,
@@ -52,8 +51,7 @@ export const servicePages = {
       {
         heading: 'What Septic Tank Cleaning Actually Means',
         body: `A lot of homeowners use "pumping" and "cleaning" interchangeably. They're not the same thing. Pumping removes the liquid and the floating scum layer, then sucks out the sludge at the bottom. Cleaning goes further: after pumping, we wash down the tank walls with high-pressure water, inspect the inlet and outlet baffles for damage, clean any effluent filter if your tank has one, and visually check the tank walls and concrete for cracks, root intrusion, or other issues.\n\nWe recommend full cleaning every other pump (so roughly every 6 to 10 years for most homes) or any time you've gone longer than 4 years between services.`,
-        image: 'https://images.pexels.com/photos/6419205/pexels-photo-6419205.jpeg?auto=compress&cs=tinysrgb&w=800',
-        imageAlt: `Septic crew performing full tank cleaning in ${c}`,
+        // image removed — add your own later
       },
       {
         heading: `Why Full Cleaning Matters in ${sf}`,
@@ -81,8 +79,7 @@ export const servicePages = {
       {
         heading: 'Common Septic Repairs We Handle',
         body: `Most septic repairs fall into a handful of categories: cracked or collapsed tank lids, damaged inlet or outlet baffles, broken or deteriorated risers, effluent filter failures, distribution box problems, and drain field issues ranging from minor clogs to full saturation.\n\nWe start every repair job with a full inspection. That means pumping the tank first (if it hasn't been done recently), visually inspecting every component, and sometimes running a camera through the lines to find the exact problem. Only then do we quote the work.`,
-        image: 'https://images.pexels.com/photos/6419205/pexels-photo-6419205.jpeg?auto=compress&cs=tinysrgb&w=800',
-        imageAlt: `Technician inspecting septic system components in ${c}`,
+        // image removed — add your own later
       },
       {
         heading: 'Repair vs. Replacement',
@@ -110,8 +107,7 @@ export const servicePages = {
       {
         heading: "When It's a Septic Emergency",
         body: `Not every septic issue is an emergency, but some absolutely are. Call us immediately if you have sewage backing up into your home through drains, tubs, or toilets, raw sewage pooling in your yard, a strong sewage odor inside your home that won't go away, or a septic alarm going off (if your system has one).\n\nThese situations can create health hazards, contaminate groundwater, and cause property damage. Don't wait for Monday morning — call our 24/7 emergency line now.`,
-        image: 'https://images.pexels.com/photos/6419205/pexels-photo-6419205.jpeg?auto=compress&cs=tinysrgb&w=800',
-        imageAlt: `Emergency septic truck dispatched in ${c} area`,
+        // image removed — add your own later
       },
       {
         heading: 'Our Emergency Response Process',
@@ -139,8 +135,7 @@ export const servicePages = {
       {
         heading: `${sf} Septic Inspections for Real Estate`,
         body: `Selling or buying a home with a septic system in ${co} County? ${sf} regulations require proper evaluation of septic systems during property transfers. The inspection ensures the system is functioning correctly and not contaminating groundwater or surface water.\n\nWe provide certified inspections and deliver a full written report to your title company, real estate agent, or county environmental health office. Most inspections can be scheduled within 3 to 5 business days.`,
-        image: 'https://images.pexels.com/photos/6419205/pexels-photo-6419205.jpeg?auto=compress&cs=tinysrgb&w=800',
-        imageAlt: `Septic inspector reviewing system documentation in ${c}`,
+        // image removed — add your own later
       },
       {
         heading: 'What a Septic Inspection Covers',
