@@ -1,0 +1,372 @@
+---
+import { site } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = `${site.name} | ${site.tagline}`,
+  description = site.description,
+  canonical = site.url,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- LocalBusiness Schema -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'LocalBusiness',
+        name: site.name,
+        description: site.description,
+        url: site.url,
+        telephone: site.phoneTel,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: site.city,
+          addressRegion: site.state,
+          addressCountry: 'US',
+        },
+        areaServed: site.locations.map((l) => ({
+          '@type': 'City',
+          name: l.name.replace(`, ${site.state}`, ''),
+        })),
+        openingHoursSpecification: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          opens: '00:00',
+          closes: '23:59',
+        },
+        priceRange: '$$',
+      })}
+    />
+  </head>
+  <body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="container">
+        <span class="top-bar-left"
+          >Serving {site.city}, {site.state} &amp; Surrounding Areas &nbsp;·&nbsp; Licensed &amp;
+          Insured</span
+        >
+        <span class="top-bar-right"
+          >24/7 Emergency: <a href={`tel:${site.phoneTel}`}>{site.phone}</a></span
+        >
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="container">
+        <a href="/" class="nav-logo">{site.city}<span>Septic</span></a>
+        <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+          <li><a href="/#locations">Areas Served</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href={`tel:${site.phoneTel}`} class="nav-cta">📞 {site.phone}</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <slot />
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="nav-logo" style="color:#fff;"
+              >{site.city}<span style="color:var(--accent);">Septic</span></div
+            >
+            <p class="footer-brand-desc">
+              Reliable septic tank pumping, cleaning, repair, and inspection in {site.city} and the
+              surrounding metro.
+            </p>
+            <a href={`tel:${site.phoneTel}`} class="footer-phone">{site.phone}</a>
+            <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px;">
+              24/7 Emergency Service
+            </p>
+          </div>
+          <div>
+            <h4>Services</h4>
+            <ul>
+              {site.services.map((s) => <li><a href={`/#services`}>{s.title}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h4>Service Area</h4>
+            <ul>
+              {
+                site.locations.slice(0, 5).map((l) => (
+                  <li>
+                    <a href="/#locations">{l.name}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div>
+            <h4>Company</h4>
+            <ul>
+              <li><a href="/about/">About</a></li>
+              <li><a href="/contact/">Contact</a></li>
+              <li><a href="/privacy/">Privacy Policy</a></li>
+              <li><a href="/terms/">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; {new Date().getFullYear()}
+            {site.name}. All rights reserved. {site.city}, {site.stateFull}
+          </p>
+        </div>
+        <p class="footer-disclaimer">{site.disclaimer}</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('nav-toggle')?.addEventListener('click', () => {
+        document.getElementById('nav-links')?.classList.toggle('active');
+      });
+    </script>
+
+    <style>
+      /* ── Top Bar ── */
+      .top-bar {
+        background: var(--bg-dark);
+        color: var(--text-inverse);
+        font-size: 13px;
+        padding: 8px 0;
+        letter-spacing: 0.01em;
+      }
+      .top-bar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .top-bar a {
+        color: var(--text-inverse);
+      }
+      .top-bar-left {
+        opacity: 0.8;
+      }
+      .top-bar-right {
+        font-weight: 600;
+      }
+      .top-bar-right a:hover {
+        text-decoration: underline;
+      }
+
+      /* ── Nav ── */
+      .nav {
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: var(--nav-height);
+      }
+      .nav .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+      }
+      .nav-logo {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--heading);
+      }
+      .nav-logo span {
+        color: var(--accent);
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-light);
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+      .nav-cta {
+        background: var(--accent) !important;
+        color: #fff !important;
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        font-weight: 600 !important;
+        transition: background 0.2s;
+      }
+      .nav-cta:hover {
+        background: var(--accent-hover) !important;
+      }
+      .nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+      }
+      .nav-toggle span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--heading);
+        margin: 5px 0;
+        transition: 0.3s;
+      }
+
+      /* ── Footer ── */
+      .footer {
+        background: var(--bg-dark);
+        color: var(--text-inverse);
+        padding: 60px 0 32px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .footer-brand-desc {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.7;
+        margin: 12px 0 16px;
+        max-width: 300px;
+      }
+      .footer-phone {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .footer h4 {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 16px;
+      }
+      .footer ul {
+        list-style: none;
+      }
+      .footer ul li {
+        margin-bottom: 10px;
+      }
+      .footer ul a {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        transition: color 0.2s;
+      }
+      .footer ul a:hover {
+        color: #fff;
+      }
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .footer-bottom p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .footer-disclaimer {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.35);
+        max-width: 600px;
+        line-height: 1.6;
+        margin-top: 16px;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 680px) {
+        .nav-links {
+          display: none;
+        }
+        .nav-links.active {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: var(--nav-height);
+          left: 0;
+          right: 0;
+          background: var(--bg-card);
+          padding: 24px;
+          border-bottom: 1px solid var(--border);
+          box-shadow: var(--shadow-lg);
+          gap: 16px;
+        }
+        .nav-toggle {
+          display: block;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .top-bar .container {
+          justify-content: center;
+          text-align: center;
+        }
+      }
+      @media (max-width: 900px) {
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </body>
+</html>
