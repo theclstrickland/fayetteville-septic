@@ -1,5 +1,6 @@
 ---
 import Base from './Base.astro';
+import Icon from '../components/Icon.astro';
 import { site } from '../data/site';
 
 interface FAQ {
@@ -27,11 +28,11 @@ const { title, meta, h1, intro, cityName, county, bodyHeading, body, servicesInt
   <!-- Hero -->
   <section class="loc-hero">
     <div class="container">
-      <div class="loc-hero-badge">📍 {county}</div>
+      <div class="loc-hero-badge">{county}</div>
       <h1>{h1}</h1>
       <p class="loc-hero-intro">{intro}</p>
       <div class="loc-hero-actions">
-        <a href={`tel:${site.phoneTel}`} class="btn-primary pulse">📞 {site.phone}</a>
+        <a href={`tel:${site.phoneTel}`} class="btn-primary pulse">{site.phone}</a>
         <a href="/contact/" class="btn-secondary">Request a Free Estimate</a>
       </div>
     </div>
@@ -42,7 +43,7 @@ const { title, meta, h1, intro, cityName, county, bodyHeading, body, servicesInt
     <div class="container">
       <div class="loc-trust-items">
         {site.trustBadges.map((b) => (
-          <span class="loc-trust-item">{b.icon} {b.text}</span>
+          <span class="loc-trust-item"><Icon name={b.icon} size={14} /> {b.text}</span>
         ))}
       </div>
     </div>
@@ -64,7 +65,7 @@ const { title, meta, h1, intro, cityName, county, bodyHeading, body, servicesInt
       <div class="loc-services-grid">
         {site.services.map((svc) => (
           <a href={`/${svc.slug}/`} class="loc-service-card">
-            <span class="loc-service-icon">{svc.icon}</span>
+            <span class="loc-service-icon"><Icon name={svc.icon} size={22} /></span>
             <span class="loc-service-name">{svc.title}</span>
             <span class="loc-service-arrow">→</span>
           </a>
@@ -135,7 +136,7 @@ const { title, meta, h1, intro, cityName, county, bodyHeading, body, servicesInt
     <div class="container">
       <h2>Reliable Septic Service in {cityName}</h2>
       <p>Real local team. Honest pricing. Fast response. Free estimates.</p>
-      <a href={`tel:${site.phoneTel}`} class="btn-primary" style="font-size:18px;padding:18px 36px;">📞 Call {site.phone}</a>
+      <a href={`tel:${site.phoneTel}`} class="btn-primary" style="font-size:18px;padding:18px 36px;">Call {site.phone}</a>
     </div>
   </section>
 </Base>

@@ -20,8 +20,8 @@
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
   --radius: 6px;
   --radius-lg: 12px;
-  --font-body: 'DM Sans', -apple-system, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Source Serif 4', Georgia, serif;
   --max-width: 1140px;
   --nav-height: 72px;
 }

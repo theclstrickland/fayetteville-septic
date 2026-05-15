@@ -31,7 +31,7 @@ export const site = {
   services: [
     {
       slug: 'septic-tank-pumping',
-      icon: '🚛',
+      icon: 'truck',
       title: 'Septic Tank Pumping',
       shortDesc:
         'Routine septic tank pumping every 3–5 years keeps your system healthy. Same-day service available for most Fayetteville addresses. Flat-rate pricing confirmed before we send a truck.',
@@ -40,7 +40,7 @@ export const site = {
     },
     {
       slug: 'septic-tank-cleaning',
-      icon: '💧',
+      icon: 'droplet',
       title: 'Septic Tank Cleaning',
       shortDesc:
         'Full cleaning goes beyond pumping. We wash the tank walls, inspect baffles, clean the effluent filter, and check for cracks or root intrusion. Recommended every other pump cycle.',
@@ -49,7 +49,7 @@ export const site = {
     },
     {
       slug: 'septic-tank-repair',
-      icon: '🔧',
+      icon: 'wrench',
       title: 'Septic Tank Repair',
       shortDesc:
         'Cracked lids, damaged baffles, collapsed lines, or failing drain fields. We diagnose the problem honestly and quote repair vs. replacement so you can make the right call.',
@@ -58,7 +58,7 @@ export const site = {
     },
     {
       slug: 'emergency-septic-service',
-      icon: '🚨',
+      icon: 'siren',
       title: 'Emergency Septic Service',
       shortDesc:
         "Sewage backup, overflow, or tank failure? We answer 24/7 and dispatch within 90 to 120 minutes across the Fayetteville metro. Don't wait — call now.",
@@ -67,7 +67,7 @@ export const site = {
     },
     {
       slug: 'septic-inspection',
-      icon: '📋',
+      icon: 'clipboard',
       title: 'Septic Inspection',
       shortDesc:
         'Selling or buying a home in Cumberland County? North Carolina requires a certified evaluation before property transfers involving septic systems. Full report delivered to your title company.',
@@ -100,42 +100,42 @@ export const site = {
 
   // ── Trust Signals ──────────────────────────────────────
   trustBadges: [
-    { icon: '✓', text: 'NC Licensed & Insured' },
-    { icon: '🚨', text: '24/7 Emergency Service' },
-    { icon: '🏠', text: 'Residential & Commercial' },
-    { icon: '📋', text: 'Certified Inspections' },
-    { icon: '💰', text: 'Free Estimates' },
+    { icon: 'check', text: 'NC Licensed & Insured' },
+    { icon: 'siren', text: '24/7 Emergency Service' },
+    { icon: 'home', text: 'Residential & Commercial' },
+    { icon: 'clipboard', text: 'Certified Inspections' },
+    { icon: 'dollar', text: 'Free Estimates' },
   ],
 
   // ── Why Us ─────────────────────────────────────────────
   reasons: [
     {
-      icon: '📍',
+      icon: 'pin',
       title: 'Local NC Team',
       desc: 'Real (910) number, real local dispatch. Not a call center in another state routing your call.',
     },
     {
-      icon: '🕐',
+      icon: 'clock',
       title: '24/7 Emergency Response',
       desc: "Septic emergencies don't wait for business hours. Neither do we. 90–120 minute dispatch window.",
     },
     {
-      icon: '💲',
+      icon: 'dollar',
       title: 'Flat-Rate Pricing',
       desc: 'Confirmed on the phone before we send a truck. No surprise charges. No hidden fees.',
     },
     {
-      icon: '📋',
+      icon: 'clipboard',
       title: 'NC Certified Inspections',
       desc: 'For Cumberland, Hoke, Harnett, and Moore county property transfers and real estate closings.',
     },
     {
-      icon: '🤝',
+      icon: 'handshake',
       title: 'Honest Quotes',
       desc: 'We inspect before recommending repair vs. replacement. No upselling. No scare tactics.',
     },
     {
-      icon: '🛡️',
+      icon: 'shield',
       title: 'Licensed & Insured',
       desc: 'Full liability coverage and proper NC septage hauler licensing. We do it by the book.',
     },

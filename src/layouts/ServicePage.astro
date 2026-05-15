@@ -1,5 +1,6 @@
 ---
 import Base from './Base.astro';
+import Icon from '../components/Icon.astro';
 import { site } from '../data/site';
 
 interface FAQ {
@@ -33,12 +34,12 @@ const { title, meta, h1, subtitle, heroImage, sections, faqs } = Astro.props;
       <h1>{h1}</h1>
       <p class="service-hero-sub">{subtitle}</p>
       <div class="service-hero-actions">
-        <a href={`tel:${site.phoneTel}`} class="btn-primary pulse">📞 {site.phone}</a>
+        <a href={`tel:${site.phoneTel}`} class="btn-primary pulse">{site.phone}</a>
         <a href="/contact/" class="btn-secondary-light">Request a Free Estimate</a>
       </div>
       <div class="service-hero-badges">
         {site.trustBadges.map((b) => (
-          <span class="hero-badge-item">{b.icon} {b.text}</span>
+          <span class="hero-badge-item"><Icon name={b.icon} size={14} /> {b.text}</span>
         ))}
       </div>
     </div>
